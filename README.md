@@ -18,7 +18,7 @@ Four VPCs. For information about creating a VPC, see [Getting started with Amazo
 
 A transit gateway. For more information, see [Create a transit gateway](https://docs.aws.amazon.com/vpc/latest/tgw/tgw-transit-gateways.html#create-tgw).
 
-Four attachments on the transit gateway for the four VPCs. For more information, see Create a transit gateway attachment to a VPC.
+Four attachments on the transit gateway for the four VPCs. For more information, see [Transit gateway attachments to a VPC](https://docs.aws.amazon.com/vpc/latest/tgw/tgw-vpc-attachments.html).
 
 A Site-to-Site VPN attachment on the transit gateway. For more information, see Create a transit gateway attachment to a VPN. Ensure that you review the requirements for your customer gateway device in the AWS Site-to-Site VPN User Guide.
 
