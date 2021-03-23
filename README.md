@@ -14,9 +14,9 @@ The following diagram shows the key components of the configuration for this sce
 
 In this scenario, you create the following entities:
 
-Four VPCs. For information about creating a VPC, see Creating a VPC in the Amazon Virtual Private Cloud User Guide.
+Four VPCs. For information about creating a VPC, see [Getting started with Amazon VPC](https://docs.aws.amazon.com/vpc/latest/userguide/vpc-getting-started.html#getting-started-create-vpc).
 
-A transit gateway. For more information, see Create a transit gateway.
+A transit gateway. For more information, see [Create a transit gateway](https://docs.aws.amazon.com/vpc/latest/tgw/tgw-transit-gateways.html#create-tgw).
 
 Four attachments on the transit gateway for the four VPCs. For more information, see Create a transit gateway attachment to a VPC.
 
