@@ -34,33 +34,14 @@ data "aws_route_table" "vpc_shared_services" {
   }
 }
 
-data "aws_instances" "hosts_regionA" {
-  depends_on = [module.jumphost_secondary]
-  filter {
-    name   = "tag:Name"
-    values = ["aws-quickstart-jumphost"]
-  }
-  instance_state_names = ["running"]
-}
-
-data "aws_instances" "hosts_regionB" {
-  provider   = aws.accepter
-  depends_on = [module.jumphost_secondary]
-  filter {
-    name   = "tag:Name"
-    values = ["aws-quickstart-jumphost"]
-  }
-  instance_state_names = ["running"]
-}
-
 resource "random_id" "name" {
   byte_length = 4
   prefix      = "aws-quickstart-"
 }
 
 resource "tls_private_key" "key" {
-  algorithm   = "RSA"
-  rsa_bits    = "2048"
+  algorithm = "RSA"
+  rsa_bits  = "2048"
 }
 
 resource "aws_key_pair" "main" {
@@ -73,28 +54,15 @@ resource "aws_key_pair" "main" {
 # ---------------------------------------------------------------------------------------------------------------------
 
 module "vpc_c" {
-  source     = "../modules/private_vpc"
+  source = "../modules/private_vpc"
   region = var.regionB
-  name       = "${var.name}_C"
-  cidr       = var.cidr_c
+  name   = "${var.name}_C"
+  cidr   = var.cidr_c
 
   enable_dns_hostnames = true
   enable_dns_support   = true
-  private_subnets = var.private_subnets_c
+  private_subnets      = var.private_subnets_c
 }
-
-######################################
-# Create jump hosts in vpc_c
-######################################
-module "jumphost_secondary" {
-  depends_on = [module.vpc_c]
-  source = "../modules/jumphost"
-  region = var.regionA
-  name   = "${var.name}_C"
-  key_name = aws_key_pair.main.id
-  subnet_name = "${var.name}_C_private_subnets"
-}
-
 
 # Add routes for intra-region  VPC routing
 resource "aws_route" "route_vpc_c_to_shared_services" {
