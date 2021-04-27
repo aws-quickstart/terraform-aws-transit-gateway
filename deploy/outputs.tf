@@ -1,9 +1,11 @@
 output "ssh_key_primary" {
-  value = module.transit_gateway_primary.private_key_pem
+  value     = module.transit_gateway_primary.private_key_pem
+  sensitive = true
 }
 
 output "ssh_key_secondary" {
-  value = module.tranist_gateway_secondary.private_key_pem
+  value     = module.tranist_gateway_secondary.private_key_pem
+  sensitive = true
 }
 
 output "jumphost_region_B_private" {
