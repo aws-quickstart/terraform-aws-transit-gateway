@@ -36,7 +36,7 @@ data "aws_route_table" "vpc_shared_services" {
 
 resource "random_id" "name" {
   byte_length = 4
-  prefix      = "aws-quickstart-"
+  prefix      = "tfm-aws-"
 }
 
 resource "tls_private_key" "key" {

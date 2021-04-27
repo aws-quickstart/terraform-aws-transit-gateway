@@ -7,22 +7,22 @@
 ######################################
 terraform {
   required_version = ">= 0.13"
-  
-   backend "remote" {}
+
+  backend "remote" {}
 }
 
 variable "main_region" {
-  type        = string
-  default     = "us-west-1"
+  type    = string
+  default = "us-west-1"
 }
 
 variable "secondary_region" {
-  type        = string
-  default     = "us-west-2"
+  type    = string
+  default = "us-west-2"
 }
 
 provider "aws" {
-  region =  var.main_region
+  region = var.main_region
 }
 
 provider "aws" {
@@ -31,7 +31,7 @@ provider "aws" {
 }
 
 resource "random_pet" "name" {
-  prefix = "aws-quickstart"
+  prefix = "tfm-aws"
   length = 1
 }
 
@@ -40,9 +40,9 @@ resource "random_pet" "name" {
 ######################################
 
 module "transit_gateway_primary" {
-  source = "../transit_gw_A"
+  source  = "../transit_gw_A"
   regionA = var.main_region
-  name   = random_pet.name.id
+  name    = random_pet.name.id
 }
 
 ######################################
@@ -50,8 +50,8 @@ module "transit_gateway_primary" {
 ######################################
 
 module "tranist_gateway_secondary" {
-  source = "../transit_gw_B"
+  source  = "../transit_gw_B"
   regionA = var.main_region
   regionB = var.secondary_region
-  name   = random_pet.name.id
+  name    = random_pet.name.id
 }
