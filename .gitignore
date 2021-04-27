@@ -1,8 +1,5 @@
 # Local .terraform directories
 **/.terraform/*
-**/.terraform.lock.*
-.terraform.lock.*
-
 
 # .tfstate files
 *.tfstate
@@ -36,3 +33,5 @@ override.tf.json
 .terraformrc
 terraform.rc
 
+.terraform.lock.hcl
+backend.hcl
