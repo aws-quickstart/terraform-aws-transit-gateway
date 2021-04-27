@@ -1,4 +1,4 @@
-Author: Tony Vattahil (tonynv@amazon.com)
+Authors: David Wright (dwright@hashicorp.com) and Tony Vattahil (tonynv@amazon.com)
 
 **Deploying the Terraform AWS Transit Gateway module**
 
