@@ -14,16 +14,6 @@ resource "random_id" "name" {
   prefix      = "tfm-aws"
 }
 
-resource "tls_private_key" "key" {
-  algorithm = "RSA"
-  rsa_bits  = "2048"
-}
-
-resource "aws_key_pair" "main" {
-  key_name_prefix = random_id.name.hex
-  public_key      = tls_private_key.key.public_key_openssh
-}
-
 # ---------------------------------------------------------------------------------------------------------------------
 # Create the basic network via terrafrom registery VPC module
 # ---------------------------------------------------------------------------------------------------------------------
@@ -59,18 +49,6 @@ module "vpc_shared_services" {
   enable_dns_hostnames = true
   enable_dns_support   = true
   public_subnets       = var.public_subnets_shared_services
-}
-
-# ######################################
-# Create jump hosts in shared_services
-######################################
-module "jumphost_primary" {
-  depends_on  = [module.vpc_shared_services]
-  source      = "../modules/jumphost"
-  region      = var.regionA
-  name        = "${var.name}_shared_services"
-  subnet_name = "${var.name}_shared_services_public_subnets"
-  key_name    = aws_key_pair.main.id
 }
 
 #create transit gateway for region A
