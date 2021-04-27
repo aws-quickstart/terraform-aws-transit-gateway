@@ -11,12 +11,12 @@ data "aws_availability_zones" "all" {}
 
 resource "random_id" "name" {
   byte_length = 4
-  prefix      = "aws-quickstart-"
+  prefix      = "tfm-aws"
 }
 
 resource "tls_private_key" "key" {
-  algorithm   = "RSA"
-  rsa_bits    = "2048"
+  algorithm = "RSA"
+  rsa_bits  = "2048"
 }
 
 resource "aws_key_pair" "main" {
@@ -36,7 +36,7 @@ module "vpc_a" {
 
   enable_dns_hostnames = true
   enable_dns_support   = true
-  private_subnets       = var.private_subnets_a
+  private_subnets      = var.private_subnets_a
 }
 
 module "vpc_b" {
@@ -47,7 +47,7 @@ module "vpc_b" {
 
   enable_dns_hostnames = true
   enable_dns_support   = true
-  private_subnets       = var.private_subnets_b
+  private_subnets      = var.private_subnets_b
 }
 
 module "vpc_shared_services" {
@@ -65,23 +65,23 @@ module "vpc_shared_services" {
 # Create jump hosts in shared_services
 ######################################
 module "jumphost_primary" {
-  depends_on = [module.vpc_shared_services]
-  source = "../modules/jumphost"
-  region = var.regionA
-  name   = "${var.name}_shared_services"
+  depends_on  = [module.vpc_shared_services]
+  source      = "../modules/jumphost"
+  region      = var.regionA
+  name        = "${var.name}_shared_services"
   subnet_name = "${var.name}_shared_services_public_subnets"
-  key_name = aws_key_pair.main.id
+  key_name    = aws_key_pair.main.id
 }
 
 ######################################
 # Create jump hosts in vpc_a
 ######################################
 module "jumphost_secondary" {
-  depends_on = [module.vpc_a]
-  source = "../modules/jumphost"
-  region = var.regionA
-  name   = "${var.name}_A"
-  key_name = aws_key_pair.main.id
+  depends_on  = [module.vpc_a]
+  source      = "../modules/jumphost"
+  region      = var.regionA
+  name        = "${var.name}_A"
+  key_name    = aws_key_pair.main.id
   subnet_name = "${var.name}_A_private_subnets"
 }
 
@@ -89,11 +89,11 @@ module "jumphost_secondary" {
 # Create jump hosts in vpc_a
 ######################################
 module "jumphost_third" {
-  depends_on = [module.vpc_b]
-  source = "../modules/jumphost"
-  region = var.regionA
-  name   = "${var.name}_B"
-  key_name = aws_key_pair.main.id
+  depends_on  = [module.vpc_b]
+  source      = "../modules/jumphost"
+  region      = var.regionA
+  name        = "${var.name}_B"
+  key_name    = aws_key_pair.main.id
   subnet_name = "${var.name}_B_private_subnets"
 }
 
@@ -226,8 +226,8 @@ resource "aws_ec2_transit_gateway_route_table_association" "tgw-rt-vpc-b-assoc" 
 }
 
 resource "aws_ec2_transit_gateway_route_table_association" "tgw-rt-vpc-shared_services-assoc" {
-  transit_gateway_attachment_id  =  aws_ec2_transit_gateway_vpc_attachment.tgw-att-region_shared_services.id
-  transit_gateway_route_table_id =  aws_ec2_transit_gateway_route_table.tgw-att-vpc_shared_services-rt.id
+  transit_gateway_attachment_id  = aws_ec2_transit_gateway_vpc_attachment.tgw-att-region_shared_services.id
+  transit_gateway_route_table_id = aws_ec2_transit_gateway_route_table.tgw-att-vpc_shared_services-rt.id
 }
 
 # # Route Tables Propagations
