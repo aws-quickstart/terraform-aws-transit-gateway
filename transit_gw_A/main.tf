@@ -73,30 +73,6 @@ module "jumphost_primary" {
   key_name    = aws_key_pair.main.id
 }
 
-######################################
-# Create jump hosts in vpc_a
-######################################
-module "jumphost_secondary" {
-  depends_on  = [module.vpc_a]
-  source      = "../modules/jumphost"
-  region      = var.regionA
-  name        = "${var.name}_A"
-  key_name    = aws_key_pair.main.id
-  subnet_name = "${var.name}_A_private_subnets"
-}
-
-######################################
-# Create jump hosts in vpc_a
-######################################
-module "jumphost_third" {
-  depends_on  = [module.vpc_b]
-  source      = "../modules/jumphost"
-  region      = var.regionA
-  name        = "${var.name}_B"
-  key_name    = aws_key_pair.main.id
-  subnet_name = "${var.name}_B_private_subnets"
-}
-
 #create transit gateway for region A
 
 resource "aws_ec2_transit_gateway" "region_A-tgw" {
