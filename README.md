@@ -35,5 +35,4 @@ export TERRAFORM_CONFIG="$HOME/.terraform.d/credentials.tfrc.json"
  
 9. Change to the deploy directory with `cd ../deploy`.
 10. Run `terraform init`.
-11. Run `terraform apply` or Run `terraform apply  -var-file="$HOME/.aws/terraform.tfvars"`. `Terraform apply` is remotely run in Terraform Cloud. 
-s
+11. Run `terraform apply` or `terraform apply  -var-file="$HOME/.aws/terraform.tfvars"`. `Terraform apply` is run remotely in Terraform Cloud.
